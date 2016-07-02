@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
 <com.example.sliding.view.SlidingMenu
+    android:id="@+id/slidemenu"
     android:layout_width="match_parent"
     android:scrollbars="none"
     huxiang:rightmargin="510dp"
@@ -18,12 +19,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFFFFF">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="#2073E1">
+            <ImageView
+                android:id="@+id/image"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/photo"
+                android:onClick="openmenu"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="欢迎使用大学圈"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/image"
+                android:layout_centerVertical="true"
                 android:textColor="#FFF000"/>
-
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 </com.example.sliding.view.SlidingMenu>

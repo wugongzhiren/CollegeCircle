@@ -23,16 +23,12 @@ public class SlidingMenu extends HorizontalScrollView{
     private ViewGroup mContent;
     private int screenwidth;
     private int menuwidth;
-    private int menuRightMargin ;
+    private int menuRightMargin=100;
     private boolean once = false;
+    private boolean isopen=false;
 
-    /**
-     * 使用了自定义属性时调用此构造方法
-     * @param context
-     * @param attrs
-     * @param defStyleAttr
-     */
-    public SlidingMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+
+   /* public SlidingMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         //获取自定义的属性
         TypedArray array=context.getTheme().obtainStyledAttributes(attrs, R.styleable.SlidingMenu,defStyleAttr,0);
@@ -50,16 +46,16 @@ public class SlidingMenu extends HorizontalScrollView{
         }
         array.recycle();
     }
-
+*/
     public SlidingMenu(Context context, AttributeSet attrs) {
-        //super(context, attrs);
-        this(context,attrs,0);
-       // WindowManager windowManager= (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-       // DisplayMetrics outMetrics=new DisplayMetrics();
-       // windowManager.getDefaultDisplay().getMetrics(outMetrics);
-       // screenwidth=outMetrics.widthPixels;
+        super(context, attrs);
+        //this(context,attrs,0);
+        WindowManager windowManager= (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics=new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(outMetrics);
+        screenwidth=outMetrics.widthPixels;
         //把DP转化为SP
-        //menuRightMargin= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,50,context.getResources().getDisplayMetrics());
+        menuRightMargin= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,50,context.getResources().getDisplayMetrics());
     }
 
   //  public SlidingMenu(Context context) {
@@ -111,13 +107,23 @@ public class SlidingMenu extends HorizontalScrollView{
                 int scrollX=getScrollX();
                 if(scrollX>menuwidth/2){
                     this.smoothScrollTo(menuwidth,0);
+                    isopen=false;
 
                 }
                 else {
                     this.smoothScrollTo(0,0);
+                    isopen=true;
                 }
                 return true;
         }
         return super.onTouchEvent(ev);
+    }
+    public void openMenu(){
+        if(isopen)return;
+        smoothScrollTo(0,0);
+    }
+    public void closeMenu(){
+        if(!isopen)return;
+        smoothScrollTo(menuwidth,0);
     }
 }
