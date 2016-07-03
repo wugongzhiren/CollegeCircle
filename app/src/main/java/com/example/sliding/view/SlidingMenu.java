@@ -11,13 +11,17 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.administrator.qqsliding.R;
+import com.nineoldandroids.view.ViewHelper;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 /**
  * Created by Administrator on 2016/7/2.
  */
-public class SlidingMenu extends HorizontalScrollView{
+public class SlidingMenu extends HorizontalScrollView {
     private LinearLayout mWrapper;
     private ViewGroup mMenu;
     private ViewGroup mContent;
@@ -26,7 +30,6 @@ public class SlidingMenu extends HorizontalScrollView{
     private int menuRightMargin=100;
     private boolean once = false;
     private boolean isopen=false;
-
 
    /* public SlidingMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -50,10 +53,12 @@ public class SlidingMenu extends HorizontalScrollView{
     public SlidingMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         //this(context,attrs,0);
+
         WindowManager windowManager= (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics=new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(outMetrics);
         screenwidth=outMetrics.widthPixels;
+
         //把DP转化为SP
         menuRightMargin= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,50,context.getResources().getDisplayMetrics());
     }
@@ -126,4 +131,26 @@ public class SlidingMenu extends HorizontalScrollView{
         if(!isopen)return;
         smoothScrollTo(menuwidth,0);
     }
+
+
+
+
+    /**
+     * 监视滚动条的变化
+     * @param l scrollX（向右边拉了多少距离）的值
+     * @param t
+     * @param oldl
+     * @param oldt
+     */
+    @Override
+    public void onScrollChanged(int l, int t, int oldl, int oldt) {
+
+        super.onScrollChanged(l, t, oldl, oldt);
+   float scale =l*1.0f/menuwidth;//l的初始值为menuwidth的长度
+       ViewHelper.setTranslationX(mMenu,menuwidth*scale);
+
+
+    }
+
+
 }
