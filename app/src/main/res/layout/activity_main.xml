@@ -10,11 +10,14 @@
     android:layout_width="match_parent"
     android:scrollbars="none"
     huxiang:rightmargin="510dp"
+    android:background="@mipmap/img_frame_background"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
+        <!--这个是隐藏的菜单layout-->
         <include layout="@layout/layout"/>
+        <!--这个是内容conten布局-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

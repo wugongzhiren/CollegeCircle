@@ -27,48 +27,49 @@ public class SlidingMenu extends HorizontalScrollView {
     private ViewGroup mContent;
     private int screenwidth;
     private int menuwidth;
-    private int menuRightMargin=100;
+    private int menuRightMargin = 100;
     private boolean once = false;
-    private boolean isopen=false;
+    private boolean isopen = false;
 
-   /* public SlidingMenu(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        //获取自定义的属性
-        TypedArray array=context.getTheme().obtainStyledAttributes(attrs, R.styleable.SlidingMenu,defStyleAttr,0);
-    int count =array.getIndexCount();//获取自定义属性的数量
-        //System.out.print(count);
-        Log.i("info",String.valueOf(count));
-        for(int i=0;i<count;i++){
-              int att= array.getIndex(i);
-            switch (att){
-                case R.styleable.SlidingMenu_rightmargin:
-                    menuRightMargin =array.getDimensionPixelSize(att,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,50,context.getResources().getDisplayMetrics()));
-            break;
-            }
+    /* public SlidingMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+         super(context, attrs, defStyleAttr);
+         //获取自定义的属性
+         TypedArray array=context.getTheme().obtainStyledAttributes(attrs, R.styleable.SlidingMenu,defStyleAttr,0);
+     int count =array.getIndexCount();//获取自定义属性的数量
+         //System.out.print(count);
+         Log.i("info",String.valueOf(count));
+         for(int i=0;i<count;i++){
+               int att= array.getIndex(i);
+             switch (att){
+                 case R.styleable.SlidingMenu_rightmargin:
+                     menuRightMargin =array.getDimensionPixelSize(att,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,50,context.getResources().getDisplayMetrics()));
+             break;
+             }
 
-        }
-        array.recycle();
-    }
-*/
+         }
+         array.recycle();
+     }
+ */
     public SlidingMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         //this(context,attrs,0);
 
-        WindowManager windowManager= (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics=new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(outMetrics);
-        screenwidth=outMetrics.widthPixels;
+        screenwidth = outMetrics.widthPixels;
 
         //把DP转化为SP
-        menuRightMargin= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,50,context.getResources().getDisplayMetrics());
+        menuRightMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, context.getResources().getDisplayMetrics());
     }
 
-  //  public SlidingMenu(Context context) {
+    //  public SlidingMenu(Context context) {
     //    this(context,null);
-   // }
+    // }
 
     /**
      * 设置子类和自己的宽和高
+     *
      * @param widthMeasureSpec
      * @param heightMeasureSpec
      */
@@ -78,11 +79,11 @@ public class SlidingMenu extends HorizontalScrollView {
             mWrapper = (LinearLayout) getChildAt(0);
             mMenu = (ViewGroup) mWrapper.getChildAt(0);
             mContent = (ViewGroup) mWrapper.getChildAt(1);
-            menuwidth=mMenu.getLayoutParams().width = screenwidth - menuRightMargin;
+            menuwidth = mMenu.getLayoutParams().width = screenwidth - menuRightMargin;
             mContent.getLayoutParams().width = screenwidth;
 
 
-           once=true;
+            once = true;
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
@@ -90,6 +91,7 @@ public class SlidingMenu extends HorizontalScrollView {
 
     /**
      * 通过设置偏移量，将menu隐藏
+     *
      * @param changed
      * @param l
      * @param t
@@ -99,45 +101,45 @@ public class SlidingMenu extends HorizontalScrollView {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
-        if(changed){
-            this.scrollTo(menuwidth,0);
+        if (changed) {
+            this.scrollTo(menuwidth, 0);
         }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        int action=ev.getAction();
-        switch (action){
+        int action = ev.getAction();
+        switch (action) {
             case MotionEvent.ACTION_UP:
-                int scrollX=getScrollX();
-                if(scrollX>menuwidth/2){
-                    this.smoothScrollTo(menuwidth,0);
-                    isopen=false;
+                int scrollX = getScrollX();
+                if (scrollX > menuwidth / 2) {
+                    this.smoothScrollTo(menuwidth, 0);
+                    isopen = false;
 
-                }
-                else {
-                    this.smoothScrollTo(0,0);
-                    isopen=true;
+                } else {
+                    this.smoothScrollTo(0, 0);
+                    isopen = true;
                 }
                 return true;
         }
         return super.onTouchEvent(ev);
     }
-    public void openMenu(){
-        if(isopen)return;
-        smoothScrollTo(0,0);
-    }
-    public void closeMenu(){
-        if(!isopen)return;
-        smoothScrollTo(menuwidth,0);
+
+    public void openMenu() {
+        if (isopen) return;
+        smoothScrollTo(0, 0);
     }
 
-
+    public void closeMenu() {
+        if (!isopen) return;
+        smoothScrollTo(menuwidth, 0);
+    }
 
 
     /**
      * 监视滚动条的变化
-     * @param l scrollX（向右边拉了多少距离）的值
+     *
+     * @param l    scrollX（向右边拉了多少距离）的值
      * @param t
      * @param oldl
      * @param oldt
@@ -146,10 +148,19 @@ public class SlidingMenu extends HorizontalScrollView {
     public void onScrollChanged(int l, int t, int oldl, int oldt) {
 
         super.onScrollChanged(l, t, oldl, oldt);
-   float scale =l*1.0f/menuwidth;//l的初始值为menuwidth的长度
-       ViewHelper.setTranslationX(mMenu,menuwidth*scale);
-
-
+        float scale = l * 1.0f / menuwidth;//l的初始值为menuwidth的长度
+        float rightscale = 0.7f + 0.3f * scale;
+        float leftscale = 1.0f - scale * 0.3f;
+        float leftAlpha = 0.6f + 0.4f * (1 - scale);
+        ViewHelper.setTranslationX(mMenu, menuwidth * scale*0.7f);
+        ViewHelper.setScaleX(mMenu, leftscale);
+        ViewHelper.setScaleY(mMenu, leftscale);
+        ViewHelper.setAlpha(mMenu,leftAlpha);
+        //  设置content的缩放的中心点
+        ViewHelper.setPivotX(mContent,0);
+        ViewHelper.setPivotY(mContent,mContent.getHeight()/2);
+        ViewHelper.setScaleX(mContent,rightscale);
+        ViewHelper.setScaleY(mContent,rightscale);
     }
 
 
