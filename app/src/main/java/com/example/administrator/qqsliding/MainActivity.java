@@ -20,7 +20,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tabfriend;
     private TextView tabfankui;
     private FragmentManager manager;
-    private Index_fg fg1,fg2,fg3,fg4;
+    private Index_fg fg1;
+    private Faxian_fg fg2;
+    private Friend_fg fg3;
+    private fankui_fg fg4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else{
                     fTransaction.show(fg1);
+                }
+                break;
+            case R.id.txt_faxian:
+                setSelected();
+                tabfaxian.setSelected(true);
+                if(fg2==null){
+                    fg2=new Faxian_fg();
+                    fTransaction.add(R.id.ly_content,fg2);//ly_content是承载fg的
+                }
+                else{
+                    fTransaction.show(fg2);
+                }
+                break;
+            case R.id.txt_friend:
+                setSelected();
+                tabfriend.setSelected(true);
+                if(fg3==null){
+                    fg3=new Friend_fg();
+                    fTransaction.add(R.id.ly_content,fg3);
+                }
+                else {
+                    fTransaction.show(fg3);
+                }
+                break;
+            case R.id.txt_fankui:
+                setSelected();
+                tabfankui.setSelected(true);
+                if(fg4==null){
+                    fg4=new fankui_fg();
+                    fTransaction.add(R.id.ly_content,fg4);
+                }
+                else {
+                    fTransaction.show(fg4);
                 }
                 break;
 

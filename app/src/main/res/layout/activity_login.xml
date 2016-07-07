@@ -34,7 +34,7 @@
         android:layout_height="32dp"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:textColor="#FFFFFF"
+        android:textColor="#545050"
         android:layout_centerHorizontal="true"
         android:hint="请输入密码"
 
